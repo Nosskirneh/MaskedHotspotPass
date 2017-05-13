@@ -1,0 +1,9 @@
+Package: se.nosskirneh.maskedhotspotpass
+Name: MaskedHotspotPass
+Depends: mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Mask the hotspot password in Settings
+Maintainer: Andreas Henriksson
+Author: Andreas Henriksson
+Section: Tweaks
