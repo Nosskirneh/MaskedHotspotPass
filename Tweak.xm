@@ -3,12 +3,23 @@
 #import <Preferences/PSTableCell.h>
 
 @interface WirelessModemController : PSListController
+- (void)hidePasswordField;
 @end
 
 %hook WirelessModemController
 
 - (void)viewDidLayoutSubviews {
     %orig;
+    [self hidePasswordField];
+}
+
+- (void)reloadSpecifiers {
+    %orig;
+    [self hidePasswordField];
+}
+
+%new
+- (void)hidePasswordField {
     PSSpecifier *passwordSpecifier = [self specifierForID:@"WIFI_PASSWORD"];
     PSTableCell *passwordTableCell = [passwordSpecifier propertyForKey:@"cellObject"];
 
