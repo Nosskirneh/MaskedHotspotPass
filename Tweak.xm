@@ -1,39 +1,13 @@
-#import <Preferences/PSListController.h>
-#import <Preferences/PSSpecifier.h>
-#import <Preferences/PSTableCell.h>
-
-@interface WirelessModemController : PSListController
-- (void)hidePasswordField;
-@end
-
 %hook WirelessModemController
 
-- (void)viewDidLayoutSubviews {
-    %orig;
-    [self hidePasswordField];
-}
-
-- (void)reloadSpecifiers {
-    %orig;
-    [self hidePasswordField];
-}
-
-%new
-- (void)hidePasswordField {
-    PSSpecifier *passwordSpecifier = [self specifierForID:@"WIFI_PASSWORD"];
-    PSTableCell *passwordTableCell = [passwordSpecifier propertyForKey:@"cellObject"];
-
-    // This method is called two times; abort if the passwordTableCell hasn't loaded
-    if (!passwordTableCell) {
-        return;
-    }
+- (id)wifiPassword:(id)specifier {
+    NSString *password = %orig;
 
     NSMutableString *dottedPassword = [NSMutableString new];
-    for (int i = 0; i < [passwordTableCell.detailTextLabel.text length]; i++) {
+    for (int i = 0; i < password.length; i++)
         [dottedPassword appendString:@"●"];
-    }
 
-    passwordTableCell.detailTextLabel.text = dottedPassword;
+    return dottedPassword;
 }
 
 %end
